@@ -21,6 +21,7 @@ const Calander = (props) => {
     const setTotalLeaves = props.setTotalLeaves;
     const setTotalHoliday = props.setTotalHoliday;
     const setTotalCl = props.setTotalCl;
+    const setCompOff = props.setCompOff;
 
     const [showSalary, setShowSalary] = useState(false);
 
@@ -128,15 +129,12 @@ const Calander = (props) => {
         const currentDate = new Date(year, month, 1);
         const day = currentDate.getDay();
 
-        var _totalLeaves = 0;
-        var _totalHoliday = 0;
-        var _totalWeekOffs = 0;
-
         const _leaveObj = {
             _totalLeaves: 0,
             _totalHoliday: 0,
             _totalWeekOffs: 0,
-            _totalDays: 0
+            _totalDays: 0,
+            _totalCompOffs:0
 
         }
 
@@ -205,6 +203,7 @@ const Calander = (props) => {
         props.setTotalworking(_totalWorking);
         setTotalLeaves(_leaveObj._totalLeaves);
         setTotalHoliday(_leaveObj._totalHoliday)
+        setCompOff(_leaveObj._totalCompOffs)
 
     }, [configuration, holidayList, leaveList, year, month, notesList, markWrokingList])
 
@@ -217,6 +216,7 @@ const Calander = (props) => {
         var _totalHoliday = _leaveObj._totalHoliday;
         var _totalWeekOffs = _leaveObj._totalWeekOffs;
         var _totalDays = _leaveObj._totalDays;
+        var _totalCompOffs = _leaveObj._totalCompOffs;
 
 
         const _obj = {
@@ -227,6 +227,8 @@ const Calander = (props) => {
             isHalfDayLeave: false,
             isWorking: true,
             date: dt,
+            isMarkWorking: false,
+            isMarkWorkingHaldDay: false,
             addHoliday: addHoliday,
             addNotes,
             addLeave,
@@ -248,6 +250,13 @@ const Calander = (props) => {
             } else if (_obj.isHolidayHalf) {
                 _totalDays += 0.5;
 
+            } if(_obj.isMarkWorking){
+                if(_obj.isMarkWorkingHaldDay){
+                    _totalCompOffs+=0.5
+                }else{
+                    _totalCompOffs+=1
+                }
+                
             } else {
                 _totalDays++;
             }
@@ -269,7 +278,7 @@ const Calander = (props) => {
         _leaveObj._totalHoliday = _totalHoliday;
         _leaveObj._totalWeekOffs = _totalWeekOffs;
         _leaveObj._totalDays = _totalDays;
-
+        _leaveObj._totalCompOffs = _totalCompOffs
 
     }
 
@@ -325,18 +334,23 @@ const Calander = (props) => {
                 if (_mw.leaveType === 'Full-day') {
                     
                     _obj.isWorking = true;
+                    _obj.isMarkWorking = true;
+                    
                     
     
                 } else if (_mw.leaveType === 'Half-day') {
-                    _obj.isHolidayHalf = true;
+                    
                     _obj.isWorking = true;
+                    _obj.isMarkWorking = true;
+                    _obj.isMarkWorkingHaldDay = true;
+                    
                     
                 }
             }
             
         }
 
-        if (!isMarkWorking) {
+        
             const saturdayOff = configuration.saturdayOff;
             if (_weekDay === 0) {
                 _obj.isOff = true;
@@ -374,7 +388,7 @@ const Calander = (props) => {
 
 
 
-        }
+        
 
 
 
@@ -432,7 +446,7 @@ const Calander = (props) => {
     console.info(props)
     return <>
         {!showSalary ? <button className="btn btn-primary" onClick={(e) => { setShowSalary(true) }}>Calculate Salary</button> : ''}
-        {showSalary ? <CalculateSalary month={month} year={year} configuration={configuration} holidays={props.holidays} leaves={props.leaves} totalWorkingDay={props.totalWorkingDay} setShowSalary={setShowSalary} />
+        {showSalary ? <CalculateSalary month={month} year={year} configuration={configuration} holidays={props.holidays} leaves={props.leaves} totalWorkingDay={props.totalWorkingDay} setShowSalary={setShowSalary} compOff={props.compOff} />
             :
             <>
 

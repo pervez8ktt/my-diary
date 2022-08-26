@@ -14,6 +14,7 @@ const CalculateSalary = ({
     configuration,
     leaves,
     holidays,
+    compOff,
     setShowSalary,
     totalWorkingDay
 }, props) => {
@@ -252,9 +253,12 @@ const CalculateSalary = ({
                 formObject.form.security.value = configuration.security;
                 formObject.form.other.value = configuration.other;
 
-
+                let earnedCl = 0;
+                if(compOff){
+                    earnedCl = compOff;
+                }
                 if (_attandance >= configuration.attandanceReqForCl) {
-                    formObject.form.clEarned.value = configuration.clPerMonth;
+                    formObject.form.clEarned.value = configuration.clPerMonth+earnedCl;
                 }
 
 

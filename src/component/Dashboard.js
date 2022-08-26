@@ -21,12 +21,13 @@ const Dashboard = (props) => {
     const [totalLeaves, setTotalLeaves] = useState(0);
     const [totalHoliday, setTotalHoliday] = useState(0);
     const [totalCl, setTotalCl] = useState(0);
+    const [compOff, setCompOff] = useState(0);
     
     
 
     useEffect(() => {
-        setCalanderView(<Calander configuration={configuration} setTotalCl={setTotalCl} setTotalworking={setTotalworking} setTotalLeaves={setTotalLeaves} setTotalHoliday={setTotalHoliday} holidays={totalHoliday} leaves={totalLeaves} totalWorkingDay={totalWorking}/>)
-    }, [configuration,totalWorking,totalLeaves,totalHoliday])
+        setCalanderView(<Calander configuration={configuration} setTotalCl={setTotalCl} setTotalworking={setTotalworking} setTotalLeaves={setTotalLeaves} setTotalHoliday={setTotalHoliday} holidays={totalHoliday} leaves={totalLeaves} totalWorkingDay={totalWorking} compOff={compOff} setCompOff={setCompOff} />)
+    }, [configuration,totalWorking,totalLeaves,totalHoliday, compOff])
 
     useEffect(() => {
         getConfigList((response) => {
@@ -51,6 +52,8 @@ const Dashboard = (props) => {
         <Col className="btn btn-danger margin-1px"><p>Total Leaves <span>{totalLeaves}</span></p></Col>
         <Col className="btn btn-warning margin-1px"><p>Total Holiday <span>{totalHoliday}</span></p></Col>
         <Col className="btn btn-success margin-1px"><p>Total CL <span>{totalCl}</span></p></Col>
+        <Col className="btn btn-success margin-1px"><p>CompOff CL <span>{compOff}</span></p></Col>
+        
         <Col></Col>
     </Row>
 
