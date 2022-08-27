@@ -16,6 +16,9 @@ const DateObject = ({
     addWorking
 }) => {
 
+    year = parseInt(year)
+    month = parseInt(month)
+
     var _d = new Date();
 
     var _class = "";
@@ -27,6 +30,8 @@ const DateObject = ({
     var isFuture = false;
 
     if(month>_d.getMonth() && year> _d.getFullYear()){
+        isFuture = true;
+    }else if(month>_d.getMonth() && year=== _d.getFullYear()){
         isFuture = true;
     }else{
         if(month===_d.getMonth() && year === _d.getFullYear() && date >= _d.getDate()){
