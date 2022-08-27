@@ -9,7 +9,7 @@ const Expenses = ({ _id, closeExpenses }) => {
 
     const [showAddExpense, setShowAddExpense] = useState(false);
 
-    const { isLoading, getExpenses } = useExpenses();
+    const { isLoading, getExpenses, deleteExpense } = useExpenses();
 
     const [expenseList, setExpenseList] = useState([]);
 
@@ -20,7 +20,7 @@ const Expenses = ({ _id, closeExpenses }) => {
             getExpenses({ accountIndex: _id }, (result) => {
                 let _expenseList = [];
                 let _totalExpense = 0;
-                for(let i=0; i< result.length; i++){
+                for(let i=result.length-1; i>=0; i--){
                     let _o = result[i];
 
                     let _d  = moment(_o.date).format("MMM Do YY"); 
@@ -30,6 +30,7 @@ const Expenses = ({ _id, closeExpenses }) => {
                         <td>{_o.perticular}</td>
                         <td>{_o.type}</td>
                         <td>{_o.amount}</td>
+                        <td><Button onClick={deleteExpenese.bind(this,_o.id)}>Delete</Button></td>
                     </tr>
                     _expenseList.push(_jsx)
 
@@ -62,6 +63,12 @@ const Expenses = ({ _id, closeExpenses }) => {
         loadExpense()
     }
 
+    
+    const deleteExpenese = (_expenseId, e) => {
+        deleteExpense({accountIndex: _id, expenseIndex: _expenseId},(_result)=>{
+            loadExpense()
+        })
+    }
 
     return <Container>
 
@@ -77,7 +84,7 @@ const Expenses = ({ _id, closeExpenses }) => {
                 </Stack>
             </Col>
         </Row>
-        <Row className="container">
+        <Row className="table-container">
             <Col>
                 <Table>
                     <thead>
@@ -86,6 +93,7 @@ const Expenses = ({ _id, closeExpenses }) => {
                             <th className="perticular">perticular</th>
                             <th>Operation</th>
                             <th>Amount</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>

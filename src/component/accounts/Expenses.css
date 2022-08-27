@@ -7,3 +7,7 @@
     padding-left: 60px !important;
     padding-right: 60px !important;
 }
+
+.table-container {
+    overflow-x: scroll;
+  }

@@ -107,12 +107,34 @@ const useExpenses = () => {
 
     },[]);
 
+    const deleteExpense = useCallback(({accountIndex, expenseIndex},_result) => {
+
+
+
+        sendTaskRequest(
+            {
+                url: '/expenses/' + localId + "/accounts/"+accountIndex+"/expenses/"+expenseIndex+".json",
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            },
+            (response) => {
+                console.info(response);
+                _result(response)
+                
+            }
+        );
+
+    },[]);
+
 
     return {
         getAccountList,
         getExpenses,
         addAccount,
         addExpenses,
+        deleteExpense,
         isLoading
         
     }

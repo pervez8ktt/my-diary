@@ -52,7 +52,7 @@ const AddExpenses = ({show,handleClose, accountIndex}) => {
         }
     }
 
-    const {formObject, formDispatcher} = useValidation(_formObject);
+    const {formObject, formDispatcher, reset} = useValidation(_formObject);
 
     const{addExpenses, isLoading} = useExpenses();
 
@@ -72,6 +72,7 @@ const AddExpenses = ({show,handleClose, accountIndex}) => {
         
 
         addExpenses(_obj,(_result)=>{
+            reset()
             handleClose(_result)
         })
     }
