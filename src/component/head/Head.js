@@ -14,6 +14,7 @@ const Head = (props) => {
                 <Link className="nav-link" to="/configuration">Configuration</Link>
                 {/* <Link className="nav-link" to="/holiday">Holiday</Link> */}
                 <Link className="nav-link" to="/leaves">Leaves</Link>
+                <Link className="nav-link" to="/accounts">Accounts</Link>
                 
                 
               </Nav>

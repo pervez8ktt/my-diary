@@ -11,6 +11,19 @@ const useHttp = () => {
   const token = authGoogleContext.token;
   const authToken = authGoogleContext.authToken;
 
+  const parseResult = (_result) => {
+    let response = [];
+    let _keys = Object.keys(_result)
+    for (let i = 0; i < _keys.length; i++) {
+      let _o = _result[_keys[i]];
+      _o['id'] = _keys[i]
+      response.push(_o)
+    }
+
+    return response;
+
+  }
+
   const sendRequest = useCallback(async (requestConfig, applyData) => {
     setIsLoading(true);
     setError(null);
@@ -18,13 +31,13 @@ const useHttp = () => {
 
       var _url = firebaseDbUrl + requestConfig.url
 
-      if(_url.indexOf("?")<0){
-        _url+="?"
-      }else{
-        _url+="&"
+      if (_url.indexOf("?") < 0) {
+        _url += "?"
+      } else {
+        _url += "&"
       }
 
-      _url+="access_token=" + token + "&auth=" + authToken;
+      _url += "access_token=" + token + "&auth=" + authToken;
 
       const response = await fetch(_url, {
         method: requestConfig.method ? requestConfig.method : 'GET',
@@ -48,7 +61,8 @@ const useHttp = () => {
     isLoading,
     error,
     sendRequest,
-    localId
+    localId,
+    parseResult
   };
 };
 
