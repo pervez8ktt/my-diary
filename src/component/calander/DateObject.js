@@ -1,6 +1,8 @@
 import { propTypes } from "react-bootstrap/esm/Image";
 
 const DateObject = ({
+    year,
+    month,
     isOff,
     isHoliday,
     isFullDayLeave,
@@ -21,7 +23,18 @@ const DateObject = ({
 
     var _dText = "";
     var currentDateClass;
-    if (date === _d.getDate()) {
+
+    var isFuture = false;
+
+    if(month>_d.getMonth() && year> _d.getFullYear()){
+        isFuture = true;
+    }else{
+        if(month===_d.getMonth() && year === _d.getFullYear() && date >= _d.getDate()){
+            isFuture = true;
+        }
+    }
+
+    if (month===_d.getMonth() && year=== _d.getFullYear() && date === _d.getDate()) {
         currentDateClass = "bg-primary"
         _btnClass="btn btn-dark"
 
@@ -51,6 +64,7 @@ const DateObject = ({
     
 
     _class = currentDateClass ? currentDateClass : _class;
+    
 
     const addHolidayHandler = () => {
         addHoliday(date);
@@ -74,9 +88,13 @@ const DateObject = ({
             <span>{_dText}</span><br/>
             {notes?<><span>{notes}</span><br/></>:<></>}
             {workingNotes?<><span>{workingNotes}</span><br/></>:<></>}
-            <button type="button" className={_btnClass} onClick={addHolidayHandler}>Holiday</button><button type="button" className={_btnClass} onClick={addLeaveHandler}>Leave</button>
+            { !isFuture && <>
+                <button type="button" className={_btnClass} onClick={addHolidayHandler}>Holiday</button><button type="button" className={_btnClass} onClick={addLeaveHandler}>Leave</button>
+                
+                <button type="button" className={_btnClass} onClick={addWorkingHandler}>Add working</button>
+            </>}
+
             <button type="button" className={_btnClass} onClick={addNotesHandler}>Notes</button>
-            <button type="button" className={_btnClass} onClick={addWorkingHandler}>Add working</button>
         </td>
     </>
 

@@ -50,13 +50,13 @@ const Calander = (props) => {
         })
     }, [month, year])
 
-    const {getTotalLeave} = useCasualLeave();
+    const { getTotalLeave } = useCasualLeave();
 
-    useEffect(()=>{
-        getTotalLeave((response)=>{
+    useEffect(() => {
+        getTotalLeave((response) => {
             setTotalCl(response.totalCl);
         })
-    },[month, year])
+    }, [month, year])
 
     useEffect(() => {
         getMarkWorkingList((response) => {
@@ -93,7 +93,7 @@ const Calander = (props) => {
     const addWorkingShowState = useState(false);
 
     const [, showWorkingModal] = addWorkingShowState;
-    
+
 
     const addLeaveShowState = useState(false);
 
@@ -122,7 +122,7 @@ const Calander = (props) => {
 
     })
 
-    
+
 
     useEffect(() => {
         var dayRows = []
@@ -134,7 +134,7 @@ const Calander = (props) => {
             _totalHoliday: 0,
             _totalWeekOffs: 0,
             _totalDays: 0,
-            _totalCompOffs:0
+            _totalCompOffs: 0
 
         }
 
@@ -220,6 +220,8 @@ const Calander = (props) => {
 
 
         const _obj = {
+            year: year,
+            month: month,
             isOff: false,
             isHoliday: false,
             isHolidayHalf: false,
@@ -243,6 +245,15 @@ const Calander = (props) => {
 
         isOff(_weekDay, dt, _obj);
 
+        if (_obj.isMarkWorking) {
+            if (_obj.isMarkWorkingHaldDay) {
+                _totalCompOffs += 0.5
+            } else {
+                _totalCompOffs += 1
+            }
+
+        }
+
         if (_obj.isWorking) {
             if (_obj.isHalfDayLeave) {
                 _totalDays += 0.5;
@@ -250,13 +261,6 @@ const Calander = (props) => {
             } else if (_obj.isHolidayHalf) {
                 _totalDays += 0.5;
 
-            } if(_obj.isMarkWorking){
-                if(_obj.isMarkWorkingHaldDay){
-                    _totalCompOffs+=0.5
-                }else{
-                    _totalCompOffs+=1
-                }
-                
             } else {
                 _totalDays++;
             }
@@ -328,67 +332,67 @@ const Calander = (props) => {
 
         if (markWrokingList) {
             var _mw = markWrokingList[dt];
-            if(_mw){
+            if (_mw) {
                 isMarkWorking = true
                 _obj.workingNotes = _mw.title;
                 if (_mw.leaveType === 'Full-day') {
-                    
+
                     _obj.isWorking = true;
                     _obj.isMarkWorking = true;
-                    
-                    
-    
+
+
+
                 } else if (_mw.leaveType === 'Half-day') {
-                    
+
                     _obj.isWorking = true;
                     _obj.isMarkWorking = true;
                     _obj.isMarkWorkingHaldDay = true;
-                    
-                    
+
+
                 }
             }
-            
+
         }
 
-        
-            const saturdayOff = configuration.saturdayOff;
-            if (_weekDay === 0) {
+
+        const saturdayOff = configuration.saturdayOff;
+        if (_weekDay === 0) {
+            _obj.isOff = true;
+            _obj.isWorking = false
+            return
+        } else {
+            _obj.isOff = false;
+        }
+
+        if (_weekDay === 6) {
+
+            const weekIndex = Math.ceil((dt - 1 - _weekDay) / 7)
+
+            if (saturdayOff === 1) {
                 _obj.isOff = true;
                 _obj.isWorking = false
                 return
-            } else {
-                _obj.isOff = false;
-            }
 
-            if (_weekDay === 6) {
-
-                const weekIndex = Math.ceil((dt - 1 - _weekDay) / 7)
-
-                if (saturdayOff === 1) {
+            } else if (saturdayOff === 2) {
+                if (weekIndex === 1 || weekIndex === 3) {
                     _obj.isOff = true;
                     _obj.isWorking = false
                     return
-
-                } else if (saturdayOff === 2) {
-                    if (weekIndex === 1 || weekIndex === 3) {
-                        _obj.isOff = true;
-                        _obj.isWorking = false
-                        return
-                    } else {
-                        _obj.isOff = false;
-                        return
-                    }
-
                 } else {
                     _obj.isOff = false;
                     return
-
                 }
+
+            } else {
+                _obj.isOff = false;
+                return
+
             }
+        }
 
 
 
-        
+
 
 
 
@@ -440,9 +444,9 @@ const Calander = (props) => {
         })
     }
 
-    
 
-    
+
+
     console.info(props)
     return <>
         {!showSalary ? <button className="btn btn-primary" onClick={(e) => { setShowSalary(true) }}>Calculate Salary</button> : ''}
