@@ -337,14 +337,14 @@ const Calander = (props) => {
                 _obj.workingNotes = _mw.title;
                 if (_mw.leaveType === 'Full-day') {
 
-                    _obj.isWorking = true;
+                    //_obj.isWorking = true;
                     _obj.isMarkWorking = true;
 
 
 
                 } else if (_mw.leaveType === 'Half-day') {
 
-                    _obj.isWorking = true;
+                    //_obj.isWorking = true;
                     _obj.isMarkWorking = true;
                     _obj.isMarkWorkingHaldDay = true;
 
@@ -491,13 +491,13 @@ const Calander = (props) => {
                         <table className="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Sun</th>
-                                    <th scope="col">Mon</th>
-                                    <th scope="col">Tue</th>
-                                    <th scope="col">Wed</th>
-                                    <th scope="col">Thr</th>
-                                    <th scope="col">Fri</th>
-                                    <th scope="col">Sat</th>
+                                    <th className={"table-head"} scope="col">Sun</th>
+                                    <th className={"table-head"} scope="col">Mon</th>
+                                    <th className={"table-head"} scope="col">Tue</th>
+                                    <th className={"table-head"} scope="col">Wed</th>
+                                    <th className={"table-head"} scope="col">Thr</th>
+                                    <th className={"table-head"} scope="col">Fri</th>
+                                    <th className={"table-head"} scope="col">Sat</th>
                                 </tr>
                             </thead>
                             <tbody>

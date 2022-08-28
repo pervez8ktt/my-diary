@@ -1,3 +1,14 @@
 .calander-container {
     overflow-x: scroll;
 }
+
+
+
+@media only screen and (max-width: 1020px) {
+    
+    .table-head {
+    
+        padding-right: 80px !important;
+        padding-left: 80px !important;
+    }
+  }
