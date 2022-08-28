@@ -1,10 +1,8 @@
-.calander-container {
-    overflow-x: scroll;
-}
-
-
-
 @media only screen and (max-width: 1020px) {
+ 
+    .calander-container {
+        overflow-x: scroll;
+    }
     
     .table-head {
     
