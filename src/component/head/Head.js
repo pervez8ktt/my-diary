@@ -10,11 +10,11 @@ const Head = (props) => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
-                <Nav.Link href="/">Home</Nav.Link>
-                <Link className="nav-link" to="/configuration">Configuration</Link>
+              <Link className="nav-link" to="/accounts">Accounts</Link>
                 {/* <Link className="nav-link" to="/holiday">Holiday</Link> */}
                 <Link className="nav-link" to="/leaves">Leaves</Link>
-                <Link className="nav-link" to="/accounts">Accounts</Link>
+                <Link className="nav-link" to="/configuration">Configuration</Link>
+                <Link className="nav-link" to="/attandance">Attandance</Link>
                 
                 
               </Nav>

@@ -9,7 +9,7 @@ const useExpenses = () => {
 
         sendTaskRequest(
             {
-                url: '/expenses/' + localId + "/accounts.json",
+                url: '/expenses/' + localId + "/accounts.json?",
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -59,6 +59,59 @@ const useExpenses = () => {
             {
                 url: '/expenses/' + localId + "/accounts.json",
                 method: 'POST',
+                body: _obj,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            },
+            (response) => {
+                console.info(response);
+                _result(response)
+                
+            }
+        );
+
+    },[]);
+
+    const editAccount = useCallback(({
+        title,
+        accountStatus,
+        id
+    }, _result) =>{
+
+        const _obj = {
+            title,
+            accountStatus
+        }
+
+        sendTaskRequest(
+            {
+                url: '/expenses/' + localId + "/accounts/"+id+".json",
+                method: 'PUT',
+                body: _obj,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            },
+            (response) => {
+                console.info(response);
+                _result(response)
+                
+            }
+        );
+
+    },[]);
+
+    const deleteAccount = useCallback(({
+        id
+    }, _result) =>{
+
+        const _obj = {}
+
+        sendTaskRequest(
+            {
+                url: '/expenses/' + localId + "/accounts/"+id+".json",
+                method: 'DELETE',
                 body: _obj,
                 headers: {
                     'Content-Type': 'application/json',
@@ -135,6 +188,8 @@ const useExpenses = () => {
         addAccount,
         addExpenses,
         deleteExpense,
+        editAccount,
+        deleteAccount,
         isLoading
         
     }

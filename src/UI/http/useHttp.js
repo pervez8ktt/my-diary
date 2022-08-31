@@ -13,12 +13,17 @@ const useHttp = () => {
 
   const parseResult = (_result) => {
     let response = [];
-    let _keys = Object.keys(_result)
-    for (let i = 0; i < _keys.length; i++) {
-      let _o = _result[_keys[i]];
-      _o['id'] = _keys[i]
-      response.push(_o)
-    }
+    try{
+      
+      let _keys = Object.keys(_result)
+      for (let i = 0; i < _keys.length; i++) {
+        let _o = _result[_keys[i]];
+        _o['id'] = _keys[i]
+        response.push(_o)
+      }
+
+    }catch(e){}
+    
 
     return response;
 
